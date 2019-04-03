@@ -17,11 +17,12 @@ def model():
 	model.add(Flatten())
 	model.add(Dense(32,  kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1,  kernel_initializer='normal', activation='sigmoid'))
-	model.compile(loss="binary_crossentropy", optimizer=Adam(lr=1), metrics=['accuracy'])
+	model.compile(loss="binary_crossentropy", optimizer='adam', metrics=['accuracy'])
 	return model
-
+#Initialize model
 model = model()
 
+#Read data
 faces = []
 image_names = [img for img in glob.glob('/home/kev/Desktop/FaceDetection/Faces/*.jpg')]
 image_names.sort()
@@ -38,23 +39,28 @@ for img in sorted(image_names):
 
 
 all_images = faces + not_faces
+for i in range(len(all_images)):
+	all_images[i] = all_images[i] / 255
 image_array = np.array(all_images)
 
-labels = []
+labels = np.zeros( (len(all_images), 1) )
 for i in range(len(faces)):
-	labels.append(1)
-for i in range(len(not_faces)):
-	labels.append(0)
-
-# while True:
-# 	i = randint(0, len(all_images))
-# 	plt.imshow(all_images[i])
-# 	plt.show()
-# 	print(labels[i])
-# 	n = input()
+	labels[i] = 1
+for i in range(len(faces), len(all_images)):
+	labels[i] = 0
 
 
-model.fit(image_array, labels, shuffle = True, epochs = 10, batch_size =128)
+#Train
+model.fit(image_array, labels, shuffle = True, epochs = 10, batch_size = 32, validation_split = 0.2)
+
+#Save model
+print("Do you want to save the model? (y for yes, any key for no)")
+n = input()
+if n == 'y':
+	model.save("FaceDetect.h5")
+	print("Model saved!")
+else:
+	print("Model not saved!")
 
 
 
