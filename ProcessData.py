@@ -32,7 +32,7 @@ for label in labels:
 
 count = 1
 for image in images:
-	for i in range(2):
+	for i in range(10):
 		new_image = image.copy()
 		image_width, image_height = new_image.size
 		x = randint(1, image_width-101)
@@ -42,7 +42,7 @@ for image in images:
 		cropped = new_image.crop( (x,y,x+crop_width, y+crop_height))
 		resized = cropped.resize((64,96))
 		#Save path
-		path = "/home/kev/Desktop/FaceDetection/NotFaces/" + str(count).zfill(4) + ".jpg"
+		path = "/home/kev/Desktop/FaceDetection/NotFaces/" + str(count).zfill(5) + ".jpg"
 		count += 1
 		resized.save(path, "JPEG")
 

@@ -51,7 +51,23 @@ for i in range(len(faces), len(all_images)):
 
 
 #Train
-model.fit(image_array, labels, shuffle = True, epochs = 10, batch_size = 32, validation_split = 0.2)
+model.fit(image_array, labels, shuffle = True, epochs = 10, batch_size = 256, validation_split = 0.2)
+
+#Calculate accuracy on each class
+count = 0
+for i in range(len(faces)):
+	if model.predict(all_images[i].reshape(1,96,64,3)) >= 0.5:
+		count += 1
+
+print("Acc on faces images: %.2f%%" % ((count * 100.0) / len(faces)))
+
+count = 0
+for i in range(len(faces), len(all_images)):
+	if model.predict(all_images[i].reshape(1,96,64,3)) < 0.5:
+		count += 1
+
+print("Acc on not faces images: %.2f%%" % ((count * 100.0) / len(not_faces)))
+
 
 #Save model
 print("Do you want to save the model? (y for yes, any key for no)")
