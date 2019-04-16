@@ -12,10 +12,10 @@ from random import randint
 
 def model():
 	model = Sequential()
-	model.add(Conv2D(64, kernel_size=3, kernel_initializer='normal', activation='relu', input_shape=(96,64,3)))
-	model.add(Conv2D(32, kernel_size=3, kernel_initializer='normal', activation='relu'))
+	#model.add(Conv2D(64, kernel_size=3, kernel_initializer='normal', activation='relu', input_shape=(96,64,3)))
+	#model.add(Conv2D(32, kernel_size=3, kernel_initializer='normal', activation='relu'))
 	model.add(Flatten())
-	model.add(Dense(32,  kernel_initializer='normal', activation='relu'))
+	#model.add(Dense(32,  kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1,  kernel_initializer='normal', activation='sigmoid'))
 	model.compile(loss="binary_crossentropy", optimizer='adam', metrics=['accuracy'])
 	return model
